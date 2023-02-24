@@ -2,11 +2,10 @@ package com.myprojects.blogging.articles;
 
 import com.myprojects.blogging.commons.BaseEntity;
 import com.myprojects.blogging.users.UserEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 import javax.swing.plaf.basic.BasicArrowButton;
+import java.util.List;
 
 @Entity(name = "article")
 public class Article extends BaseEntity {
@@ -23,5 +22,8 @@ public class Article extends BaseEntity {
 
     @ManyToOne
     private UserEntity author;
+
+    @ManyToMany(mappedBy = "likedArticles")
+    private List<UserEntity> likes;
 
 }
