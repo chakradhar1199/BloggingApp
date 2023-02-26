@@ -3,10 +3,12 @@ package com.myprojects.blogging.users;
 import com.myprojects.blogging.articles.Article;
 import com.myprojects.blogging.commons.BaseEntity;
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.List;
 
 @Entity(name = "users")
+@Data
 public class UserEntity extends BaseEntity {
     @Column(unique = true,nullable = false,length = 50)
     private String username;
@@ -16,6 +18,7 @@ public class UserEntity extends BaseEntity {
 
     private String bio;
     private String image;
+    private String email;
 
     @JoinTable(
             name = "article likes",
