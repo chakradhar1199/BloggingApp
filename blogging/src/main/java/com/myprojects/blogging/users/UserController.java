@@ -39,4 +39,10 @@ public class UserController {
         var userRespone = userService.upateUser(id, createUserDto);
         return ResponseEntity.accepted().body(userRespone);
     }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable Long id){
+
+        return ResponseEntity.accepted().body("User id " + userService.deleteUser(id) + " deleted");
+    }
 }

@@ -71,6 +71,18 @@ public class UserService {
         return modelMapper.map(user, UserResponseDto.class);
     }
 
+    public Long deleteUser(Long id) {
+        UserEntity user = userRepository.getReferenceById(id);
+
+        if(!user.equals(null)){
+        Long deletedUserId = user.getId();
+        userRepository.delete(user);
+        return deletedUserId;
+        }
+        else throw new UserNotFoundException(id);
+
+    }
+
     public static class UserNotFoundException extends IllegalArgumentException{
         public UserNotFoundException(Long id){
             super("User with id "+id+" not found");
@@ -79,6 +91,8 @@ public class UserService {
         public UserNotFoundException(String username){
             super("User with username: "+username+" not found");
         }
+
+
     }
 
     public static class UserAlreadyExist extends IllegalArgumentException{
