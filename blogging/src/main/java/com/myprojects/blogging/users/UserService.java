@@ -1,8 +1,13 @@
 package com.myprojects.blogging.users;
 
 import lombok.AllArgsConstructor;
+import org.apache.catalina.User;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -27,7 +32,14 @@ public class UserService {
         return userResponseDto;
     }
 
-
+    public List<UserResponseDto> getUsers(){
+        var userList = userRepository.findAll();
+        List<UserResponseDto> userResponseDtos = new ArrayList<>();
+        for(UserEntity user: userList){
+            userResponseDtos.add(modelMapper.map(user,UserResponseDto.class));
+        }
+        return userResponseDtos;
+    }
     public UserResponseDto loginUser(UserLoginDto userDto){
 
 
@@ -44,6 +56,19 @@ public class UserService {
         return userResponseDto;
 
 
+    }
+
+    public UserResponseDto upateUser(Long id, CreateUserDto createUserDto) {
+         UserEntity user = userRepository.getReferenceById(id);
+         user.setUsername(createUserDto.getUsername());
+         user.setPassword(createUserDto.getPassword());
+         user.setEmail(createUserDto.getEmail());
+         return modelMapper.map(user, UserResponseDto.class);
+    }
+
+    public UserResponseDto getReferenceById(Long id) {
+        UserEntity user = userRepository.getReferenceById(id);
+        return modelMapper.map(user, UserResponseDto.class);
     }
 
     public static class UserNotFoundException extends IllegalArgumentException{

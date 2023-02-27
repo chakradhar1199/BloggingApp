@@ -2,12 +2,10 @@ package com.myprojects.blogging.users;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 @AllArgsConstructor
 @RestController
@@ -22,5 +20,23 @@ public class UserController {
                 .created(URI.create("/users/" + savedUser.getId()))
                 .body(savedUser);
 
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserResponseDto> getReferenceById(@PathVariable Long id){
+        UserResponseDto userResponseDto = userService.getReferenceById(id);
+        return ResponseEntity.ok().body(userResponseDto);
+    }
+
+    @GetMapping("")
+    public ResponseEntity<List<UserResponseDto>> getUsers(){
+        var userList = userService.getUsers();
+        return ResponseEntity.ok().body(userList);
+    }
+
+    @PatchMapping("/update/{id}")
+    public ResponseEntity<UserResponseDto> updateUser(@PathVariable Long id,@RequestBody CreateUserDto createUserDto){
+        var userRespone = userService.upateUser(id, createUserDto);
+        return ResponseEntity.accepted().body(userRespone);
     }
 }
