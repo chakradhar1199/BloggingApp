@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.apache.catalina.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,12 +16,15 @@ public class UserService {
     private UserRepository userRepository;
     private ModelMapper modelMapper;
 
+    private final PasswordEncoder passwordEncoder;
+
 
     public UserResponseDto createUser(CreateUserDto userDto){
         //TODO: Encrypt the password
         //TODO: check for the email
 
         var newUser = modelMapper.map(userDto, UserEntity.class);
+        newUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
         var user = userRepository.findByUsername(userDto.getUsername());
         if(user!=null){
             throw new UserAlreadyExist(newUser.getUsername());
