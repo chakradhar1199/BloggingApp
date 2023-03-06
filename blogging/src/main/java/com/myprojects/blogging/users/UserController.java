@@ -45,4 +45,20 @@ public class UserController {
 
         return ResponseEntity.accepted().body("User id " + userService.deleteUser(id) + " deleted");
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<UserResponseDto> loginUser(@RequestBody UserLoginDto loginDto){
+        var savedUser = userService.loginUser(loginDto);
+        return ResponseEntity.ok(savedUser);
+    }
+
+    @ExceptionHandler(UserService.UserNotFoundException.class)
+    public ResponseEntity<String> handleUserNotFoundException(IllegalArgumentException e){
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException e){
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
 }

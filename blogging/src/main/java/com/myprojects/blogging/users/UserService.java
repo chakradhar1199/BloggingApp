@@ -52,9 +52,11 @@ public class UserService {
             throw new UserNotFoundException(userDto.getUsername());
         }
         //TODO: decrypt the password and check
-        if(!user.getPassword().equals(userDto.getPassword())) {
+        var passMatch = passwordEncoder.matches(userDto.getPassword(), user.getPassword());
+        if(!passMatch){
             throw new IllegalArgumentException("Incorrect Password");
         }
+
 
         var userResponseDto = modelMapper.map(user, UserResponseDto.class);
         return userResponseDto;
