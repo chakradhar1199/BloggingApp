@@ -27,7 +27,8 @@ dependencies {
 	implementation 'org.modelmapper.extensions:modelmapper-spring:3.1.0'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-
+	//JWT:
+	implementation 'com.auth0:java-jwt:4.3.0'
 	runtimeOnly 'org.postgresql:postgresql'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	annotationProcessor 'org.projectlombok:lombok'
