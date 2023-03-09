@@ -1,6 +1,7 @@
 package com.myprojects.blogging.security;
 
 
+import com.myprojects.blogging.security.jwt.JWTService;
 import org.junit.jupiter.api.Test;
 
 

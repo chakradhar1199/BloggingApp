@@ -1,9 +1,8 @@
 package com.myprojects.blogging.users;
 
+import com.myprojects.blogging.security.jwt.JWTService;
 import lombok.AllArgsConstructor;
-import org.apache.catalina.User;
 import org.modelmapper.ModelMapper;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +14,7 @@ import java.util.List;
 public class UserService {
     private UserRepository userRepository;
     private ModelMapper modelMapper;
+    private JWTService jwtService;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -33,6 +33,7 @@ public class UserService {
         var savedUser  = userRepository.save(newUser);
 
         var userResponseDto = modelMapper.map(savedUser, UserResponseDto.class);
+        userResponseDto.setToken(jwtService.createJWT(savedUser.getId()));
         return userResponseDto;
     }
 
@@ -59,6 +60,7 @@ public class UserService {
 
 
         var userResponseDto = modelMapper.map(user, UserResponseDto.class);
+        userResponseDto.setToken(jwtService.createJWT(user.getId()));
         return userResponseDto;
 
 
