@@ -22,11 +22,11 @@ public class AuthTokenService {
         return savedAuthToken.getId();
     }
 
-    public UserEntity getUserIdFromAuthToken(UUID authToken){
+    public Long getUserIdFromAuthToken(UUID authToken){
         var authTokenFromRepo = authTokenRepository.findById(authToken)
                 .orElseThrow(() -> new BadCredentialsException("Invalid AuthToken"));
 
-        return authTokenFromRepo.getUser();
+        return authTokenFromRepo.getUser().getId();
     }
 
     
