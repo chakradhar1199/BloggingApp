@@ -1,5 +1,6 @@
 package com.myprojects.blogging.users;
 
+import com.myprojects.blogging.security.authtoken.AuthToken;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -47,8 +48,15 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UserResponseDto> loginUser(@RequestBody UserLoginDto loginDto){
-        var savedUser = userService.loginUser(loginDto);
+    public ResponseEntity<UserResponseDto> loginUser(@RequestBody UserLoginDto loginDto,
+                                                     @RequestParam(required = false,value = "token") String authToken){
+
+        // (default) auth token is JWT
+        var auth_token = UserService.AuthType.JWT;
+        if(authToken!=null && authToken.equals("auth_token") ){
+            auth_token = UserService.AuthType.AUTH_TOKEN;
+        }
+        var savedUser = userService.loginUser(loginDto, auth_token);
         return ResponseEntity.ok(savedUser);
     }
 

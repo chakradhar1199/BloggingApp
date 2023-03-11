@@ -1,5 +1,6 @@
 package com.myprojects.blogging.users;
 
+import com.myprojects.blogging.security.authtoken.AuthTokenService;
 import com.myprojects.blogging.security.jwt.JWTService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -15,7 +16,7 @@ public class UserService {
     private UserRepository userRepository;
     private ModelMapper modelMapper;
     private JWTService jwtService;
-
+    private AuthTokenService authTokenService;
     private final PasswordEncoder passwordEncoder;
 
 
@@ -45,10 +46,10 @@ public class UserService {
         }
         return userResponseDtos;
     }
-    public UserResponseDto loginUser(UserLoginDto userDto){
+    public UserResponseDto loginUser(UserLoginDto userDto, AuthType authToken){
 
 
-        var user = userRepository.findByUsername(userDto.getUsername());
+        UserEntity user = userRepository.findByUsername(userDto.getUsername());
         if(user == null){
             throw new UserNotFoundException(userDto.getUsername());
         }
@@ -57,10 +58,17 @@ public class UserService {
         if(!passMatch){
             throw new IllegalArgumentException("Incorrect Password");
         }
-
-
         var userResponseDto = modelMapper.map(user, UserResponseDto.class);
-        userResponseDto.setToken(jwtService.createJWT(user.getId()));
+        switch (authToken){
+            case JWT -> {
+                userResponseDto.setToken(
+                        jwtService.createJWT(user.getId())
+                );
+            }
+            case AUTH_TOKEN -> {
+                userResponseDto.setToken(authTokenService.createAuthToken(user).toString());
+            }
+        }
         return userResponseDto;
 
 
@@ -107,5 +115,11 @@ public class UserService {
         public UserAlreadyExist(String username){
             super("Username "+ username+" already exists");
         }
+    }
+
+
+    static enum AuthType{
+        JWT,
+        AUTH_TOKEN
     }
 }
