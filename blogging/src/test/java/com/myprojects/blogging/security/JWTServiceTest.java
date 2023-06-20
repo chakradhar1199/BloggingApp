@@ -13,8 +13,8 @@ public class JWTServiceTest {
     private JWTService jwtService = new JWTService();
     @Test
     void canCreateJWTFromUSerId(){
-        var userId = 1122;
-        var jwt = jwtService.createJWT(userId, new Date(1678161317), new Date(1678766117));
+        var userId = 1122L;
+        var jwt = jwtService.createJWT(userId);
         assertEquals("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMTIyIiwiZXhwIjoxNjc4NzY2LCJpYXQiOjE2NzgxNjF9._7fHAwRfQnWGt9wVltZ_zc_E1EBB6QwltAUuAMDFkcA", jwt);
     }
 

@@ -1,0 +1,72 @@
+Collection (a group of different objects of different types)
+1. Collection(I) -> List, set, queue
+
+Collection (I) every collection object implements  seriazable and clonable interfaces
+
+add()
+addAll()
+remove()
+removeAll()
+clear()
+size()
+contains()
+retainAll(collection c)
+    example: find common characters between two string with out using loops
+    String s1, String s2
+Iterator()
+    -> reads objects from collection one by one unlike for loop does load all the data into the ram memory
+    -> will be helpful when we are deleting an element from a list in loop while iterating
+
+List  [1,2,3,4,,5]
+
+
+1. List(I) -> ArrayList(c), LinkedList(c), Vector (c) -> stack(c)
+ArrayList:
+    1. properties :
+        1. searching - O(1)
+        2. for frequent insert/deletion in between list - O(n)
+    default initial capacity - 10
+    new capacity = (currentcapacity*3/2)+1
+    1. ArrayList()
+    2. ArrayList(initialcapacity)
+    3. ArrayList(Collection c)
+    Array.asList(int[] a)
+    ways of instantiating the List
+        List list = new ArrayList(initialCapacity:100);
+        List list = new ArrayList();
+        List<String> list5 = new ArrayList<>(Arrays.asList( "One", "Two", "Three"));
+    4. Arraylist is not Synchronous by default. for getting synchronous List
+        ArrayList<String> sList= Collections.synchronizedList(list2);
+
+LinkedList:
+    1. properties :
+        1. searching - O(n)
+        2. for frequent insert/deletion in between list - O(1)
+    2. underlying data stucture is doublyLinked List
+
+Vector:
+    1. it's a synchronized list.
+    2. it's mainly used in legacy applications.
+    3. in recent applications for thread safty, we have go with below for more flexibility.
+        ArrayList<String> sList= Collections.synchronizedList(list2)
+
+Stack:
+    1. it's a child class of vector.
+    methods:
+        1. push, pop, contains, search,empty,peek
+
+
+
+
+Cursors: the cursors are useful 
+    1. Enumeration:
+        a. it's applicable for only legacy classes like vector.
+        b. methods:
+            hasMoreElements() -> returns true or false
+            nextElement() -> gets the next element
+
+    2.
+
+
+
+

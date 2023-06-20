@@ -31,6 +31,7 @@ public class AppSecurityConfig {
         http.addFilterBefore(new JWTAuthenticationFilter(), AnonymousAuthenticationFilter.class);
         http.addFilterBefore(new AuthTokenFilter(authTokenService), AnonymousAuthenticationFilter.class);
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+//        super.cofigure(http)
         return http.build();
     }
 
